@@ -3,6 +3,7 @@ package com.raysilent.workshopspringboot.config;
 import com.raysilent.workshopspringboot.domain.Post;
 import com.raysilent.workshopspringboot.domain.User;
 import com.raysilent.workshopspringboot.dto.AuthorDto;
+import com.raysilent.workshopspringboot.dto.CommentDto;
 import com.raysilent.workshopspringboot.repository.PostRepository;
 import com.raysilent.workshopspringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,13 @@ public class Instantiation implements CommandLineRunner {
 
         Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem!", "Vou viajar para Sao Paulo, abracos!", new AuthorDto(mariana));
         Post post2 = new Post(null, sdf.parse("11/04/2019"), "Bom dia!", "Acordei feliz hoje!", new AuthorDto(mariana));
+
+        CommentDto c1 = new CommentDto("Boa viagem, maninha!", sdf.parse("21/03/2018"), new AuthorDto(rayan));
+        CommentDto c2 = new CommentDto("Aproveite bastante!", sdf.parse("21/03/2018"), new AuthorDto(livia));
+        CommentDto c3 = new CommentDto("Que otimo, fico mt feliz, maninha!", sdf.parse("11/04/2019"), new AuthorDto(rayan));
+
+        post1.getComments().addAll(Arrays.asList(c1, c2));
+        post2.getComments().addAll(Arrays.asList(c3));
 
         postRepository.saveAll(Arrays.asList(post1, post2));
 
