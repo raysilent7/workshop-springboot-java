@@ -1,5 +1,6 @@
 package com.raysilent.workshopspringboot.resources;
 
+import com.fasterxml.jackson.core.json.async.NonBlockingJsonParser;
 import com.raysilent.workshopspringboot.domain.User;
 import com.raysilent.workshopspringboot.dto.UserDto;
 import com.raysilent.workshopspringboot.services.UserService;
@@ -43,6 +44,14 @@ public class UserResource {
     @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable String id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> update(@RequestBody UserDto objDto, @PathVariable String id) {
+        User obj = service.fromDTO(objDto);
+        obj.setId(id);
+        obj = service.update(obj);
         return ResponseEntity.noContent().build();
     }
 }
