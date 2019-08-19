@@ -2,6 +2,7 @@ package com.raysilent.workshopspringboot.config;
 
 import com.raysilent.workshopspringboot.domain.Post;
 import com.raysilent.workshopspringboot.domain.User;
+import com.raysilent.workshopspringboot.dto.AuthorDto;
 import com.raysilent.workshopspringboot.repository.PostRepository;
 import com.raysilent.workshopspringboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,14 @@ public class Instantiation implements CommandLineRunner {
         User rayan = new User(null, "Rayan Garcia", "rayan@gmail.com");
         User livia = new User(null, "Livia Flores", "liviafofinha@gmail.com");
 
-        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem!", "Vou viajar para Sao Paulo, abracos!", mariana);
-        Post post2 = new Post(null, sdf.parse("11/04/2019"), "Bom dia!", "Acordei feliz hoje!", mariana);
-
         userRepository.saveAll(Arrays.asList(mariana, rayan, livia));
+
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem!", "Vou viajar para Sao Paulo, abracos!", new AuthorDto(mariana));
+        Post post2 = new Post(null, sdf.parse("11/04/2019"), "Bom dia!", "Acordei feliz hoje!", new AuthorDto(mariana));
+
         postRepository.saveAll(Arrays.asList(post1, post2));
+
+        mariana.getPosts().addAll(Arrays.asList(post1, post2));
+        userRepository.save(mariana);
     }
 }
